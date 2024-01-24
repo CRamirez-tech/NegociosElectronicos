@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/navigation_articles"
+        android:icon="@drawable/ic_dashboard_black_24dp"
+        android:title="@string/title_articles" />
+
+    <item
+        android:id="@+id/navigation_marcas"
+        android:icon="@android:drawable/ic_menu_agenda"
+        android:title="@string/title_marcas" />
+
+    <item
+        android:id="@+id/navigation_metric_unit"
+        android:icon="@android:drawable/ic_menu_day"
+        android:title="@string/title_metric_unit" />
+
+</menu>

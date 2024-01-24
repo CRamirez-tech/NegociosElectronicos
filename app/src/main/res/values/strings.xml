@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">Negocios Electronicos</string>
+    <string name="title_articles">Articulos</string>
+    <string name="title_marcas">Marcas</string>
+    <string name="title_metric_unit">Unidad de Medida</string>
+    <string name="btn_aniadir">Aniadir</string>
+</resources>
