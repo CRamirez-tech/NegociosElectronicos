@@ -55,7 +55,7 @@
         android:layout_marginTop="@dimen/form_separator"
         android:layout_marginEnd="@dimen/form_both"
         android:hint="Precio Unitario"
-        android:inputType="number"
+        android:inputType="number|numberDecimal"
         android:minHeight="48dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

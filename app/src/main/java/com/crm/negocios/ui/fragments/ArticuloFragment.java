@@ -113,8 +113,12 @@ public class ArticuloFragment extends Fragment {
         }));
 
         fabAgregar.setOnClickListener(v -> {
-            Intent intent = new Intent(this.getContext(), ArticuloAddActivity.class);
-            startActivity(intent);
+            if(marcaList.isEmpty() || unidadList.isEmpty()){
+                Toast.makeText(getActivity(), "Primero necesitas agregar marcas y/o unidades", Toast.LENGTH_SHORT).show();
+            }else{
+                Intent intent = new Intent(this.getContext(), ArticuloAddActivity.class);
+                startActivity(intent);
+            }
         });
         return root;
     }
