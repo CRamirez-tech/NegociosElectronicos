@@ -4,4 +4,6 @@
     <string name="title_marcas">Marcas</string>
     <string name="title_metric_unit">Unidad de Medida</string>
     <string name="btn_aniadir">Aniadir</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

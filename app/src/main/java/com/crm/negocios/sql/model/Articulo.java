@@ -1,14 +1,14 @@
 package com.crm.negocios.sql.model;
 
 public class Articulo {
+    private long Cod;
     private String Nombre;
     private int UnidadMedida;
     private double PrecioUnitario;
     private int Marca;
     private String EstadoRegistro;
-    private long Cod;
 
-    public Articulo(String nombre, int unidadMedida, double precioUnitario, int marca, String estadoRegistro, long cod) {
+    public Articulo(long cod, String nombre, int unidadMedida, double precioUnitario, int marca, String estadoRegistro) {
         Nombre = nombre;
         UnidadMedida = unidadMedida;
         PrecioUnitario = precioUnitario;

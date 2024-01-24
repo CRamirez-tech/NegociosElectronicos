@@ -15,9 +15,10 @@ import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.crm.negocios.MainActivity;
+import com.crm.negocios.ArticuloAddActivity;
+import com.crm.negocios.ArticuloEditActivity;
 import com.crm.negocios.R;
-import com.crm.negocios.databinding.FragmentHomeBinding;
+import com.crm.negocios.databinding.FragmentArticuloBinding;
 import com.crm.negocios.sql.model.Articulo;
 import com.crm.negocios.sql.controllers.ArticuloController;
 import com.crm.negocios.ui.RecyclerTouchListener;
@@ -27,12 +28,11 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import java.util.ArrayList;
 import java.util.List;
 
-public class HomeFragment extends Fragment {
+public class ArticuloFragment extends Fragment {
     private List<Articulo> listaArticulos;
     private ArticuloAdapter articuloAdapter;
     private ArticuloController articuloController;
-
-    private FragmentHomeBinding binding;
+    private FragmentArticuloBinding binding;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -53,7 +53,7 @@ public class HomeFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
 
-        binding = FragmentHomeBinding.inflate(inflater, container, false);
+        binding = FragmentArticuloBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
         RecyclerView recyclerView = root.findViewById(R.id.recyclerViewArticulos);
@@ -65,13 +65,13 @@ public class HomeFragment extends Fragment {
         recyclerView.setLayoutManager(mLayoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.setAdapter(articuloAdapter);
-        refrescarListaDeMascotas();
+        refrescarLista();
         recyclerView.addOnItemTouchListener(new RecyclerTouchListener(this.getContext(), recyclerView, new RecyclerTouchListener.ClickListener() {
             @Override // Un toque sencillo
             public void onClick(View view, int position) {
                 // Pasar a la actividad EditarMascotaActivity.java
                 Articulo articulo = listaArticulos.get(position);
-                Intent intent = new Intent(getContext(), MainActivity.class);
+                Intent intent = new Intent(getContext(), ArticuloEditActivity.class);
                 intent.putExtra("nombreArticulo",articulo.getNombre());
                 intent.putExtra("unidadMedidaArticulo",articulo.getUnidadMedida());
                 intent.putExtra("precioUnitarioArticulo",articulo.getPrecioUnitario());
@@ -88,7 +88,7 @@ public class HomeFragment extends Fragment {
                         .Builder(getContext())
                         .setPositiveButton("Sí, eliminar", (dialog1, which) -> {
                             articuloController.eliminarArticulo(articuloParaEliminar);
-                            refrescarListaDeMascotas();
+                            refrescarLista();
                         })
                         .setNegativeButton("Cancelar", (dialog2, which) -> dialog2.dismiss())
                         .setTitle("Confirmar")
@@ -98,19 +98,11 @@ public class HomeFragment extends Fragment {
             }
         }));
 
-        // Listener del FAB
         fabAgregar.setOnClickListener(v -> {
-            // Simplemente cambiamos de actividad
-            Intent intent = new Intent(getContext(), MainActivity.class);
+            Intent intent = new Intent(this.getContext(), ArticuloAddActivity.class);
             startActivity(intent);
         });
         return root;
-    }
-
-    @Override
-    public void onStart() {
-        super.onStart();
-        //refrescarListaDeMascotas();
     }
 
     @Override
@@ -119,7 +111,7 @@ public class HomeFragment extends Fragment {
         binding = null;
     }
 
-    public void refrescarListaDeMascotas() {
+    public void refrescarLista() {
         if (articuloAdapter == null) return;
         listaArticulos = articuloController.obtenerArticulos();
         articuloAdapter.setArticuloList(listaArticulos);

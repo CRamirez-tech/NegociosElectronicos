@@ -26,7 +26,7 @@ public class BDHelper extends SQLiteOpenHelper {
     @Override
     public void onOpen(SQLiteDatabase db) {
         super.onOpen(db);
-        db.execSQL(INIT_SQL_0);
+        //db.execSQL(INIT_SQL_0);
     }
 
     @Override

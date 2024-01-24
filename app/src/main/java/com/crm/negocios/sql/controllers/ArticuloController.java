@@ -22,7 +22,7 @@ public class ArticuloController {
     public int eliminarArticulo(Articulo articulo) {
         SQLiteDatabase baseDeDatos = ayudanteBaseDeDatos.getWritableDatabase();
         String[] argumentos = {String.valueOf(articulo.getCod())};
-        return baseDeDatos.delete(NOMBRE_TABLA, "id = ?", argumentos);
+        return baseDeDatos.delete(NOMBRE_TABLA, "ArtCod = ?", argumentos);
     }
 
     public long nuevoArticulo(Articulo articulo) {
@@ -49,7 +49,7 @@ public class ArticuloController {
         valoresParaActualizar.put("MarCod",articulo.getMarca());
         valoresParaActualizar.put("ArtEst",articulo.getEstadoRegistro());
 
-        String campoParaActualizar = "id = ?";
+        String campoParaActualizar = "ArtCod = ?";
         String[] argumentosParaActualizar = {String.valueOf(articulo.getCod())};
         return baseDeDatos.update(NOMBRE_TABLA, valoresParaActualizar, campoParaActualizar, argumentosParaActualizar);
     }
@@ -73,12 +73,10 @@ public class ArticuloController {
         );
 
         if (cursor == null) {
-            Log.d("Negocios","cursor es nulo");
             return articulos;
         }
 
         if (!cursor.moveToFirst()){
-            Log.d("asd","noMoveToFirst");
             return articulos;
         }
 
@@ -90,7 +88,7 @@ public class ArticuloController {
             int MarcaFromDB = cursor.getInt(4);
             String EstadoRegistroFromDB = cursor.getString(5);
 
-            Articulo articulo = new Articulo(NombreFromDB, UnidadMedidaFromDB, PrecioUnitarioFromDB, MarcaFromDB, EstadoRegistroFromDB, CodFromDB);
+            Articulo articulo = new Articulo(CodFromDB, NombreFromDB, UnidadMedidaFromDB, PrecioUnitarioFromDB, MarcaFromDB, EstadoRegistroFromDB);
             articulos.add(articulo);
         } while (cursor.moveToNext());
 

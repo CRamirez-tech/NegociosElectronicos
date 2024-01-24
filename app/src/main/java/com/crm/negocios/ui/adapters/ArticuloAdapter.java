@@ -29,8 +29,8 @@ public class ArticuloAdapter extends RecyclerView.Adapter<ArticuloAdapter.MyView
     @NonNull
     @Override
     public MyViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
-        View filaArticulo = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.fila_articulos, viewGroup, false);
-        return new MyViewHolder(filaArticulo);
+        View rootHolder = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.item_articulos, viewGroup, false);
+        return new MyViewHolder(rootHolder);
     }
 
     @Override
@@ -39,16 +39,16 @@ public class ArticuloAdapter extends RecyclerView.Adapter<ArticuloAdapter.MyView
         Articulo articulo = articuloList.get(i);
 
         // Obtener los datos de la lista
-        String NombreArticulo = articulo.getNombre();
-        int UnidadMedidaArticulo = articulo.getUnidadMedida();
-        double PrecioUnitarioArticulo = articulo.getPrecioUnitario();
-        int MarcaArticulo = articulo.getMarca();
+        String nombre = articulo.getNombre();
+        int codUnidadMedida = articulo.getUnidadMedida();
+        double precioUnitario = articulo.getPrecioUnitario();
+        int codMarca = articulo.getMarca();
 
         // Y poner a los TextView los datos con setText
-        myViewHolder.nombre.setText(NombreArticulo);
-        myViewHolder.unidadMedida.setText(String.valueOf(UnidadMedidaArticulo));
-        myViewHolder.precioUnitario.setText(new DecimalFormat("0.00").format(PrecioUnitarioArticulo));
-        myViewHolder.marca.setText(String.valueOf(MarcaArticulo));
+        myViewHolder.nombre.setText(nombre);
+        myViewHolder.unidadMedida.setText(String.valueOf(codUnidadMedida));
+        myViewHolder.precioUnitario.setText(new DecimalFormat("0.00").format(precioUnitario));
+        myViewHolder.marca.setText(String.valueOf(codMarca));
     }
 
     @Override

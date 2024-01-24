@@ -7,19 +7,19 @@
 
     <fragment
         android:id="@+id/navigation_articles"
-        android:name="com.crm.negocios.ui.fragments.HomeFragment"
+        android:name="com.crm.negocios.ui.fragments.ArticuloFragment"
         android:label="@string/title_articles"
-        tools:layout="@layout/fragment_home" />
+        tools:layout="@layout/fragment_articulo" />
 
     <fragment
         android:id="@+id/navigation_marcas"
-        android:name="com.crm.negocios.ui.fragments.DashboardFragment"
+        android:name="com.crm.negocios.ui.fragments.MarcaFragment"
         android:label="@string/title_marcas"
-        tools:layout="@layout/fragment_dashboard" />
+        tools:layout="@layout/fragment_marca" />
 
     <fragment
         android:id="@+id/navigation_metric_unit"
-        android:name="com.crm.negocios.ui.fragments.NotificationsFragment"
+        android:name="com.crm.negocios.ui.fragments.UnidadMedidaFragment"
         android:label="@string/title_metric_unit"
-        tools:layout="@layout/fragment_notifications" />
+        tools:layout="@layout/fragment_metric_unit" />
 </navigation>
