@@ -38,17 +38,6 @@ public class MarcaFragment extends Fragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         marcaController = new MarcaController(this.getContext());
-        /*
-        Marca test = new Marca("Ind. San Miguel");
-        long id = marcaController.nuevaMarca(test);
-        if (id == -1) {
-            // De alguna manera ocurrió un error
-            Toast.makeText(this.getActivity(), "Error al guardar. Intenta de nuevo", Toast.LENGTH_SHORT).show();
-        } else {
-            // Terminar
-            Toast.makeText(this.getActivity(), "Si guardo", Toast.LENGTH_SHORT).show();
-        }
-         */
     }
 
     public View onCreateView(@NonNull LayoutInflater inflater,

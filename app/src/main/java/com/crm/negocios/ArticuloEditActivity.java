@@ -110,7 +110,7 @@ public class ArticuloEditActivity extends AppCompatActivity {
                 return;
             }
 
-            Articulo mascotaConNuevosCambios = new Articulo(articulo.getCod(),nuevoNombre,1, nuevoPrecio,1,nuevoEstado);
+            Articulo mascotaConNuevosCambios = new Articulo(articulo.getCod(),nuevoNombre, (int) marcaSeleccionadaCod, nuevoPrecio, (int) unidadSeleccionadaCod,nuevoEstado);
             int filasModificadas = articuloController.guardarCambios(mascotaConNuevosCambios);
             if (filasModificadas != 1) {
                 Toast.makeText(ArticuloEditActivity.this, "Error guardando cambios. Intente de nuevo.", Toast.LENGTH_SHORT).show();
@@ -132,7 +132,7 @@ public class ArticuloEditActivity extends AppCompatActivity {
         spinMarca.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
-                // Manejar la selección del Spinner aquí
+
                 marcaSeleccionadaCod = marcaList.get(position).getCod();
                 //String marcaSeleccionadaNombre = marcaList.get(position).getNombre();
                 //String marcaSeleccionadaEstado = marcaList.get(position).getEstadoRegistro();

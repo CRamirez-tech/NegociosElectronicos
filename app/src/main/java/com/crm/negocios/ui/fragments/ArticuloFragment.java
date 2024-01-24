@@ -42,8 +42,6 @@ public class ArticuloFragment extends Fragment {
     private List<Articulo> listaArticulos;
     private ArticuloAdapter articuloAdapter;
     private ArticuloController articuloController;
-    private List<Marca> marcaList;
-    private List<UnidadMedida> unidadList;
     private FragmentArticuloBinding binding;
     private long marcaSeleccionadaCod;
 
@@ -51,8 +49,7 @@ public class ArticuloFragment extends Fragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         articuloController = new ArticuloController(this.getContext());
-        marcaList = new MarcaController(this.getContext()).obtenerMarcas();
-        unidadList = new UnidadMedidaController(this.getContext()).obtenerUnidadMedida();
+
     }
 
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -65,7 +62,11 @@ public class ArticuloFragment extends Fragment {
         FloatingActionButton fabAgregar = root.findViewById(R.id.fabAgregar);
 
         listaArticulos = new ArrayList<>();
-        articuloAdapter = new ArticuloAdapter(listaArticulos);
+
+        List<Marca> marcaList = new MarcaController(this.getContext()).obtenerMarcas();
+        List<UnidadMedida> unidadList = new UnidadMedidaController(this.getContext()).obtenerUnidadMedida();
+
+        articuloAdapter = new ArticuloAdapter(listaArticulos, generarHashMapMarca(marcaList), generarHashMapUnidad(unidadList));
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(this.getContext());
         recyclerView.setLayoutManager(mLayoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
@@ -130,5 +131,19 @@ public class ArticuloFragment extends Fragment {
         articuloAdapter.setArticuloList(listaArticulos);
 
         articuloAdapter.notifyDataSetChanged();
+    }
+    private HashMap<Long, String> generarHashMapMarca(List<Marca> listaMarcas) {
+        HashMap<Long, String> hashMapMarcas = new HashMap<>();
+        for (Marca marca : listaMarcas) {
+            hashMapMarcas.put(marca.getCod(), marca.getNombre());
+        }
+        return hashMapMarcas;
+    }
+    private HashMap<Long, String> generarHashMapUnidad(List<UnidadMedida> listaUnidades) {
+        HashMap<Long, String> hashMapMarcas = new HashMap<>();
+        for (UnidadMedida unidad : listaUnidades) {
+            hashMapMarcas.put(unidad.getCod(), unidad.getNombre());
+        }
+        return hashMapMarcas;
     }
 }

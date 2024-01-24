@@ -39,15 +39,6 @@ public class UnidadMedidaFragment extends Fragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         marcaController = new UnidadMedidaController(this.getContext());
-        /*
-        UnidadMedida test = new UnidadMedida("L.");
-        long id = marcaController.nuevaUnidad(test);
-        if (id == -1) {
-            Toast.makeText(this.getActivity(), "Error al guardar. Intenta de nuevo", Toast.LENGTH_SHORT).show();
-        } else {
-            Toast.makeText(this.getActivity(), "Si guardo", Toast.LENGTH_SHORT).show();
-        }
-        */
     }
 
     public View onCreateView(@NonNull LayoutInflater inflater,

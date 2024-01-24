@@ -10,21 +10,28 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.crm.negocios.R;
 import com.crm.negocios.sql.model.Articulo;
+import com.crm.negocios.sql.model.Marca;
 
 import java.text.DecimalFormat;
+import java.util.HashMap;
 import java.util.List;
 
 public class ArticuloAdapter extends RecyclerView.Adapter<ArticuloAdapter.MyViewHolder> {
 
     private List<Articulo> articuloList;
+    private HashMap<Long, String> marcaList;
+    private HashMap<Long, String> unidadList;
+
+    public ArticuloAdapter(List<Articulo> articuloList, HashMap<Long, String> marcaList, HashMap<Long, String> unidadList) {
+        this.articuloList = articuloList;
+        this.marcaList = marcaList;
+        this.unidadList = unidadList;
+    }
 
     public void setArticuloList(List<Articulo> articuloList) {
         this.articuloList = articuloList;
     }
 
-    public ArticuloAdapter(List<Articulo> articulos) {
-        this.articuloList = articulos;
-    }
 
     @NonNull
     @Override
@@ -40,15 +47,15 @@ public class ArticuloAdapter extends RecyclerView.Adapter<ArticuloAdapter.MyView
 
         // Obtener los datos de la lista
         String nombre = articulo.getNombre();
-        int codUnidadMedida = articulo.getUnidadMedida();
+        long codUnidadMedida = articulo.getUnidadMedida();
         double precioUnitario = articulo.getPrecioUnitario();
-        int codMarca = articulo.getMarca();
+        long codMarca = articulo.getMarca();
 
         // Y poner a los TextView los datos con setText
         myViewHolder.nombre.setText(nombre);
-        myViewHolder.unidadMedida.setText(String.valueOf(codUnidadMedida));
+        myViewHolder.unidadMedida.setText(unidadList.get(codUnidadMedida));
         myViewHolder.precioUnitario.setText(new DecimalFormat("0.00").format(precioUnitario));
-        myViewHolder.marca.setText(String.valueOf(codMarca));
+        myViewHolder.marca.setText(marcaList.get(codMarca));
     }
 
     @Override
