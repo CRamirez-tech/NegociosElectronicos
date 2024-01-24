@@ -39,15 +39,15 @@ public class UnidadMedidaFragment extends Fragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         marcaController = new UnidadMedidaController(this.getContext());
+        /*
         UnidadMedida test = new UnidadMedida("L.");
         long id = marcaController.nuevaUnidad(test);
         if (id == -1) {
-            // De alguna manera ocurrió un error
             Toast.makeText(this.getActivity(), "Error al guardar. Intenta de nuevo", Toast.LENGTH_SHORT).show();
         } else {
-            // Terminar
             Toast.makeText(this.getActivity(), "Si guardo", Toast.LENGTH_SHORT).show();
         }
+        */
     }
 
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -70,11 +70,15 @@ public class UnidadMedidaFragment extends Fragment {
             public void onClick(View view, int position) {
                 // Pasar a la actividad EditarMascotaActivity.java
                 UnidadMedida unidadMedida = listaMedidas.get(position);
-                Intent intent = new Intent(getContext(), UnidadMedidaEditActivity.class);
-                intent.putExtra("cod",unidadMedida.getCod());
-                intent.putExtra("nombre",unidadMedida.getNombre());
-                intent.putExtra("estadoRegistro",unidadMedida.getEstadoRegistro());
-                startActivity(intent);
+                if(unidadMedida.getEstadoRegistro().equals("A")){
+                    Intent intent = new Intent(getContext(), UnidadMedidaEditActivity.class);
+                    intent.putExtra("cod",unidadMedida.getCod());
+                    intent.putExtra("nombre",unidadMedida.getNombre());
+                    intent.putExtra("estadoRegistro",unidadMedida.getEstadoRegistro());
+                    startActivity(intent);
+                }else{
+                    Toast.makeText(getActivity(), "Primero necesita activar el item", Toast.LENGTH_SHORT).show();
+                }
             }
 
             @Override // Un toque largo
@@ -82,8 +86,12 @@ public class UnidadMedidaFragment extends Fragment {
                 final UnidadMedida unidadMedida = listaMedidas.get(position);
                 AlertDialog dialog = new AlertDialog
                         .Builder(getContext())
-                        .setPositiveButton("Sí, eliminar", (dialog1, which) -> {
+                        .setPositiveButton("Si, Eliminar", (dialog1, which) -> {
                             marcaController.eliminarUnidad(unidadMedida);
+                            refrescarLista();
+                        })
+                        .setNeutralButton("Solo Desactivar/Activar", (dialog1, which) -> {
+                            marcaController.desactivarUnidad(unidadMedida);
                             refrescarLista();
                         })
                         .setNegativeButton("Cancelar", (dialog2, which) -> dialog2.dismiss())
@@ -108,7 +116,7 @@ public class UnidadMedidaFragment extends Fragment {
     }
     public void refrescarLista() {
         if (unidadMedidaAdapter == null) return;
-        listaMedidas = marcaController.obtenerArticulos();
+        listaMedidas = marcaController.obtenerUnidadMedida();
         unidadMedidaAdapter.setUnidadMedidaList(listaMedidas);
 
         unidadMedidaAdapter.notifyDataSetChanged();

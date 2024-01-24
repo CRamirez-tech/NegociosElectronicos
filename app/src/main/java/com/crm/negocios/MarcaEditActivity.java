@@ -71,6 +71,7 @@ public class MarcaEditActivity extends AppCompatActivity {
             if (filasModificadas != 1) {
                 Toast.makeText(MarcaEditActivity.this, "Error guardando cambios. Intente de nuevo.", Toast.LENGTH_SHORT).show();
             } else {
+                Toast.makeText(MarcaEditActivity.this, "Se modifico la marca correctamente", Toast.LENGTH_SHORT).show();
                 volverCasa();
             }
         });

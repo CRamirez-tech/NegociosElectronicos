@@ -17,13 +17,35 @@ public class UnidadMedidaController {
     public UnidadMedidaController(Context context) {
         this.ayudanteBaseDeDatos = new BDHelper(context,null,1);
     }
-
-    public int eliminarUnidad(UnidadMedida unidad) {
+    public int eliminarUnidadFisico(UnidadMedida unidad) {
         SQLiteDatabase baseDeDatos = ayudanteBaseDeDatos.getWritableDatabase();
         String[] argumentos = {String.valueOf(unidad.getCod())};
         return baseDeDatos.delete(NOMBRE_TABLA, "UmeCod = ?", argumentos);
     }
+    public int eliminarUnidad(UnidadMedida unidad) {
+        SQLiteDatabase baseDeDatos = ayudanteBaseDeDatos.getWritableDatabase();
+        ContentValues valoresParaActualizar = new ContentValues();
 
+        valoresParaActualizar.put("UmeEst","*");
+
+        String campoParaActualizar = "UmeCod = ?";
+        String[] argumentosParaActualizar = {String.valueOf(unidad.getCod())};
+        return baseDeDatos.update(NOMBRE_TABLA, valoresParaActualizar, campoParaActualizar, argumentosParaActualizar);
+    }
+    public int desactivarUnidad(UnidadMedida unidad) {
+        String estado = "I";
+        if (unidad.getEstadoRegistro().equals(estado)){
+            estado = "A";
+        }
+        SQLiteDatabase baseDeDatos = ayudanteBaseDeDatos.getWritableDatabase();
+        ContentValues valoresParaActualizar = new ContentValues();
+
+        valoresParaActualizar.put("UmeEst",estado);
+
+        String campoParaActualizar = "UmeCod = ?";
+        String[] argumentosParaActualizar = {String.valueOf(unidad.getCod())};
+        return baseDeDatos.update(NOMBRE_TABLA, valoresParaActualizar, campoParaActualizar, argumentosParaActualizar);
+    }
     public long nuevaUnidad(UnidadMedida unidad) {
 
         SQLiteDatabase baseDeDatos = ayudanteBaseDeDatos.getWritableDatabase();
@@ -47,7 +69,7 @@ public class UnidadMedidaController {
         return baseDeDatos.update(NOMBRE_TABLA, valoresParaActualizar, campoParaActualizar, argumentosParaActualizar);
     }
 
-    public ArrayList<UnidadMedida> obtenerArticulos() {
+    public ArrayList<UnidadMedida> obtenerUnidadMedida() {
         ArrayList<UnidadMedida> unidades = new ArrayList<>();
 
         // readable porque no vamos a modificar, solamente leer
@@ -58,7 +80,7 @@ public class UnidadMedidaController {
         Cursor cursor = baseDeDatos.query(
                 NOMBRE_TABLA,
                 columnasAConsultar,
-                null,
+                "NOT UmeEst = '*'",
                 null,
                 null,
                 null,

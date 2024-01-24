@@ -26,7 +26,6 @@ public class UnidadMedidaAddActivity extends AppCompatActivity {
 
         unidadMedidaController = new UnidadMedidaController(UnidadMedidaAddActivity.this);
 
-
         btnAgregar.setOnClickListener(v -> {
 
             etNombre.setError(null);
@@ -43,9 +42,9 @@ public class UnidadMedidaAddActivity extends AppCompatActivity {
             long id = unidadMedidaController.nuevaUnidad(nuevaUnidad);
             if (id == -1) {
                 // De alguna manera ocurrió un error
-                Toast.makeText(UnidadMedidaAddActivity.this, "Error al guardar. Intenta de nuevo", Toast.LENGTH_SHORT).show();
+                Toast.makeText(UnidadMedidaAddActivity.this, "Error al guardar la unidad. Intenta de nuevo", Toast.LENGTH_SHORT).show();
             } else {
-                // Terminar
+                Toast.makeText(UnidadMedidaAddActivity.this, "Se modifico la unidad correctamente", Toast.LENGTH_SHORT).show();
                 finish();
             }
         });

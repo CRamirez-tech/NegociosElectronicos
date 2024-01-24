@@ -18,12 +18,35 @@ public class MarcaController {
         this.ayudanteBaseDeDatos = new BDHelper(context,null,1);
     }
 
-    public int eliminarMarca(Marca marca) {
+    public int eliminarMarcaFisico(Marca marca) {
         SQLiteDatabase baseDeDatos = ayudanteBaseDeDatos.getWritableDatabase();
         String[] argumentos = {String.valueOf(marca.getCod())};
         return baseDeDatos.delete(NOMBRE_TABLA, "MarCod = ?", argumentos);
     }
+    public int eliminarMarca(Marca marca) {
+        SQLiteDatabase baseDeDatos = ayudanteBaseDeDatos.getWritableDatabase();
+        ContentValues valoresParaActualizar = new ContentValues();
 
+        valoresParaActualizar.put("MarEst","*");
+
+        String campoParaActualizar = "MarCod = ?";
+        String[] argumentosParaActualizar = {String.valueOf(marca.getCod())};
+        return baseDeDatos.update(NOMBRE_TABLA, valoresParaActualizar, campoParaActualizar, argumentosParaActualizar);
+    }
+    public int desactivarMarca(Marca marca) {
+        String estado = "I";
+        if (marca.getEstadoRegistro().equals(estado)){
+            estado = "A";
+        }
+        SQLiteDatabase baseDeDatos = ayudanteBaseDeDatos.getWritableDatabase();
+        ContentValues valoresParaActualizar = new ContentValues();
+
+        valoresParaActualizar.put("MarEst",estado);
+
+        String campoParaActualizar = "MarCod = ?";
+        String[] argumentosParaActualizar = {String.valueOf(marca.getCod())};
+        return baseDeDatos.update(NOMBRE_TABLA, valoresParaActualizar, campoParaActualizar, argumentosParaActualizar);
+    }
     public long nuevaMarca(Marca marca) {
         // writable porque vamos a insertar
         SQLiteDatabase baseDeDatos = ayudanteBaseDeDatos.getWritableDatabase();
@@ -47,7 +70,7 @@ public class MarcaController {
         return baseDeDatos.update(NOMBRE_TABLA, valoresParaActualizar, campoParaActualizar, argumentosParaActualizar);
     }
 
-    public ArrayList<Marca> obtenerArticulos() {
+    public ArrayList<Marca> obtenerMarcas() {
         ArrayList<Marca> marcas = new ArrayList<>();
 
         // readable porque no vamos a modificar, solamente leer
@@ -58,7 +81,7 @@ public class MarcaController {
         Cursor cursor = baseDeDatos.query(
                 NOMBRE_TABLA,
                 columnasAConsultar,
-                null,
+                "NOT MarEst = '*'",
                 null,
                 null,
                 null,
@@ -81,7 +104,6 @@ public class MarcaController {
             Marca marca = new Marca(CodFromDB, NombreFromDB, EstadoRegistroFromDB);
             marcas.add(marca);
         } while (cursor.moveToNext());
-
         cursor.close();
         return marcas;
     }

@@ -19,12 +19,35 @@ public class ArticuloController {
         ayudanteBaseDeDatos = new BDHelper(context,null,1);
     }
 
-    public int eliminarArticulo(Articulo articulo) {
+    public int eliminarArticuloFisico(Articulo articulo) {
         SQLiteDatabase baseDeDatos = ayudanteBaseDeDatos.getWritableDatabase();
         String[] argumentos = {String.valueOf(articulo.getCod())};
         return baseDeDatos.delete(NOMBRE_TABLA, "ArtCod = ?", argumentos);
     }
+    public int eliminarArticulo(Articulo articulo) {
+        SQLiteDatabase baseDeDatos = ayudanteBaseDeDatos.getWritableDatabase();
+        ContentValues valoresParaActualizar = new ContentValues();
 
+        valoresParaActualizar.put("ArtEst","*");
+
+        String campoParaActualizar = "ArtCod = ?";
+        String[] argumentosParaActualizar = {String.valueOf(articulo.getCod())};
+        return baseDeDatos.update(NOMBRE_TABLA, valoresParaActualizar, campoParaActualizar, argumentosParaActualizar);
+    }
+    public int desactivarArticulo(Articulo articulo) {
+        String estado = "I";
+        if (articulo.getEstadoRegistro().equals(estado)){
+            estado = "A";
+        }
+        SQLiteDatabase baseDeDatos = ayudanteBaseDeDatos.getWritableDatabase();
+        ContentValues valoresParaActualizar = new ContentValues();
+
+        valoresParaActualizar.put("ArtEst",estado);
+
+        String campoParaActualizar = "ArtCod = ?";
+        String[] argumentosParaActualizar = {String.valueOf(articulo.getCod())};
+        return baseDeDatos.update(NOMBRE_TABLA, valoresParaActualizar, campoParaActualizar, argumentosParaActualizar);
+    }
     public long nuevoArticulo(Articulo articulo) {
         // writable porque vamos a insertar
         SQLiteDatabase baseDeDatos = ayudanteBaseDeDatos.getWritableDatabase();
@@ -65,7 +88,7 @@ public class ArticuloController {
         Cursor cursor = baseDeDatos.query(
                 NOMBRE_TABLA,
                 columnasAConsultar,
-                null,
+                "NOT ArtEst = '*'",
                 null,
                 null,
                 null,

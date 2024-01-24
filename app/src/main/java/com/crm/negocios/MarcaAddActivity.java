@@ -24,7 +24,6 @@ public class MarcaAddActivity extends AppCompatActivity {
 
         marcaController = new MarcaController(MarcaAddActivity.this);
 
-
         btnAgregar.setOnClickListener(v -> {
 
             etNombre.setError(null);
@@ -41,9 +40,9 @@ public class MarcaAddActivity extends AppCompatActivity {
             long id = marcaController.nuevaMarca(nuevaMarca);
             if (id == -1) {
                 // De alguna manera ocurrió un error
-                Toast.makeText(MarcaAddActivity.this, "Error al guardar. Intenta de nuevo", Toast.LENGTH_SHORT).show();
+                Toast.makeText(MarcaAddActivity.this, "Error al guardar la marca. Intenta de nuevo", Toast.LENGTH_SHORT).show();
             } else {
-                // Terminar
+                Toast.makeText(MarcaAddActivity.this, "Se guardo la marca correctamente", Toast.LENGTH_SHORT).show();
                 finish();
             }
         });

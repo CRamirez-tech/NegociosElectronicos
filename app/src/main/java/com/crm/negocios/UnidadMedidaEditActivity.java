@@ -4,13 +4,20 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.crm.negocios.sql.controllers.UnidadMedidaController;
 import com.crm.negocios.sql.model.Marca;
 import com.crm.negocios.sql.model.UnidadMedida;
+
+import java.util.ArrayList;
+import java.util.HashMap;
 
 public class UnidadMedidaEditActivity extends AppCompatActivity {
     private EditText etNombre, etEstado;
@@ -72,9 +79,12 @@ public class UnidadMedidaEditActivity extends AppCompatActivity {
             if (filasModificadas != 1) {
                 Toast.makeText(UnidadMedidaEditActivity.this, "Error guardando cambios. Intente de nuevo.", Toast.LENGTH_SHORT).show();
             } else {
+                Toast.makeText(UnidadMedidaEditActivity.this, "Se modifico la unidad correctamente", Toast.LENGTH_SHORT).show();
                 volverCasa();
             }
         });
+
+
     }
     void volverCasa(){
         Intent intent = new Intent(UnidadMedidaEditActivity.this, MainActivity.class);

@@ -14,6 +14,7 @@ import android.widget.Toast;
 
 import com.crm.negocios.MainActivity;
 import com.crm.negocios.R;
+import com.crm.negocios.UnidadMedidaAddActivity;
 import com.crm.negocios.databinding.FragmentArticuloAddBinding;
 import com.crm.negocios.sql.controllers.ArticuloController;
 import com.crm.negocios.sql.model.Articulo;
@@ -82,8 +83,9 @@ public class ArticuloAddFragment extends Fragment {
                 long id = articuloController.nuevoArticulo(nuevoArticulo);
                 if (id == -1) {
                     // De alguna manera ocurrió un error
-                    Toast.makeText(getActivity(), "Error al guardar. Intenta de nuevo", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity(), "Error al guardar el articulo. Intenta de nuevo", Toast.LENGTH_SHORT).show();
                 } else {
+                    Toast.makeText(getActivity(), "Se guardo el articulo correctamente", Toast.LENGTH_SHORT).show();
                     volverCasa();
                 }
             }

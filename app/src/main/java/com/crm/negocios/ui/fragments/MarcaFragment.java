@@ -38,6 +38,7 @@ public class MarcaFragment extends Fragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         marcaController = new MarcaController(this.getContext());
+        /*
         Marca test = new Marca("Ind. San Miguel");
         long id = marcaController.nuevaMarca(test);
         if (id == -1) {
@@ -47,6 +48,7 @@ public class MarcaFragment extends Fragment {
             // Terminar
             Toast.makeText(this.getActivity(), "Si guardo", Toast.LENGTH_SHORT).show();
         }
+         */
     }
 
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -69,12 +71,16 @@ public class MarcaFragment extends Fragment {
             @Override // Un toque sencillo
             public void onClick(View view, int position) {
                 // Pasar a la actividad EditarMascotaActivity.java
-                Marca articulo = listaMarcas.get(position);
-                Intent intent = new Intent(getContext(), MarcaEditActivity.class);
-                intent.putExtra("cod",articulo.getCod());
-                intent.putExtra("nombre",articulo.getNombre());
-                intent.putExtra("estadoRegistro",articulo.getEstadoRegistro());
-                startActivity(intent);
+                Marca marca = listaMarcas.get(position);
+                if(marca.getEstadoRegistro().equals("A")){
+                    Intent intent = new Intent(getContext(), MarcaEditActivity.class);
+                    intent.putExtra("cod",marca.getCod());
+                    intent.putExtra("nombre",marca.getNombre());
+                    intent.putExtra("estadoRegistro",marca.getEstadoRegistro());
+                    startActivity(intent);
+                }else{
+                    Toast.makeText(getActivity(), "Primero necesita activar el item", Toast.LENGTH_SHORT).show();
+                }
             }
 
             @Override // Un toque largo
@@ -84,6 +90,10 @@ public class MarcaFragment extends Fragment {
                         .Builder(getContext())
                         .setPositiveButton("Sí, eliminar", (dialog1, which) -> {
                             marcaController.eliminarMarca(marca);
+                            refrescarLista();
+                        })
+                        .setNeutralButton("Solo Desactivar/Activar", (dialog1, which) -> {
+                            marcaController.desactivarMarca(marca);
                             refrescarLista();
                         })
                         .setNegativeButton("Cancelar", (dialog2, which) -> dialog2.dismiss())
@@ -108,7 +118,7 @@ public class MarcaFragment extends Fragment {
     }
     public void refrescarLista() {
         if (articuloAdapter == null) return;
-        listaMarcas = marcaController.obtenerArticulos();
+        listaMarcas = marcaController.obtenerMarcas();
         articuloAdapter.setMarcasList(listaMarcas);
 
         articuloAdapter.notifyDataSetChanged();
